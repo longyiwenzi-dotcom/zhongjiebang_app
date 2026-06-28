@@ -1,5 +1,5 @@
 [versions]
-agp = "9.2.1"
+agp = "8.1.0"
 kotlin = "1.8.22"                         # 添加这一行，指定 Kotlin 版本
 coreKtx = "1.10.1"
 junit = "4.13.2"
