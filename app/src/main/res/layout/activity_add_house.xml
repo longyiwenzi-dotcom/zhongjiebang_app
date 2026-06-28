@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 房源类型选择 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房源类型"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_type_rent"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:text="出租"
+                    android:textSize="15sp"
+                    android:backgroundTint="@color/orange"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_type_sell"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:text="出售"
+                    android:textSize="15sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 小区名称 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小区名称"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_community"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="请输入小区名称"
+                android:textSize="15sp"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 街道地址 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="街道地址"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="请输入街道地址"
+                android:textSize="15sp"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 门牌号 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="门牌号"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_house_number"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="例如：3栋2单元501"
+                android:textSize="15sp"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 房型 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房型"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/et_room"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:hint="室"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:background="@android:drawable/edit_text"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  室  "
+                    android:textSize="15sp"
+                    android:textColor="#666666" />
+
+                <EditText
+                    android:id="@+id/et_hall"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:hint="厅"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:background="@android:drawable/edit_text"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  厅  "
+                    android:textSize="15sp"
+                    android:textColor="#666666" />
+
+                <EditText
+                    android:id="@+id/et_bathroom"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:hint="卫"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:background="@android:drawable/edit_text"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  卫"
+                    android:textSize="15sp"
+                    android:textColor="#666666" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 面积 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="建筑面积（㎡）"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_area"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="请输入建筑面积"
+                android:textSize="15sp"
+                android:inputType="numberDecimal"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 楼层 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="楼层"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/et_floor"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:hint="所在楼层"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:background="@android:drawable/edit_text"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  /  "
+                    android:textSize="15sp"
+                    android:textColor="#666666" />
+
+                <EditText
+                    android:id="@+id/et_total_floor"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:hint="总楼层"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:background="@android:drawable/edit_text"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  层"
+                    android:textSize="15sp"
+                    android:textColor="#666666" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 是否有电梯 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <CheckBox
+                android:id="@+id/cb_has_elevator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="有电梯"
+                android:textSize="15sp"
+                android:textColor="#333333" />
+
+        </LinearLayout>
+
+        <!-- 装修情况 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="装修情况"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_decoration_fine"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="精装修"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_decoration_normal"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="普通装修"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_decoration_rough"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="毛坯房"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 朝向 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="朝向"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_orientation"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="例如：南北通透、朝南"
+                android:textSize="15sp"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 价格 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tv_price_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="租金（元/月）"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_price"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="请输入价格"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 联系人 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系人"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_contact_name"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="请输入联系人姓名"
+                android:textSize="15sp"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 联系电话 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系电话"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_contact_phone"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="请输入联系电话"
+                android:textSize="15sp"
+                android:inputType="phone"
+                android:background="@android:drawable/edit_text"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" />
+
+        </LinearLayout>
+
+        <!-- 房源描述 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房源描述"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/et_description"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:hint="请输入房源描述，例如：配套设施、周边环境等"
+                android:textSize="15sp"
+                android:background="@android:drawable/edit_text"
+                android:padding="12dp"
+                android:gravity="top" />
+
+        </LinearLayout>
+
+        <!-- 保存按钮 -->
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="保存房源"
+            android:textSize="17sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/blue"
+            android:layout_marginBottom="40dp" />
+
+    </LinearLayout>
+
+</ScrollView>

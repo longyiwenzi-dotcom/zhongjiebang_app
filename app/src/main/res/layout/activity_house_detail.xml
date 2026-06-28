@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 图片区域 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/blue_light"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🏠"
+                    android:textSize="72sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="房源图片"
+                    android:textSize="14sp"
+                    android:textColor="#999999" />
+
+            </LinearLayout>
+
+            <!-- 价格区域 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3500元/月"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/orange" />
+
+                <TextView
+                    android:id="@+id/tv_type_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="出租"
+                    android:textSize="12sp"
+                    android:textColor="@color/orange"
+                    android:background="@color/orange_light"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp" />
+
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#F5F5F5" />
+
+            <!-- 基本信息 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:id="@+id/tv_community"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="阳光花园"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="道里区工农大街"
+                    android:textSize="14sp"
+                    android:textColor="#666666" />
+
+                <!-- 房型面积 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_room"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2室1厅1卫"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#333333" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="房型"
+                            android:textSize="12sp"
+                            android:textColor="#999999" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#EEEEEE" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="78.5㎡"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#333333" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="面积"
+                            android:textSize="12sp"
+                            android:textColor="#999999" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#EEEEEE" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_floor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12/28层"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#333333" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="楼层"
+                            android:textSize="12sp"
+                            android:textColor="#999999" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#F5F5F5" />
+
+            <!-- 房屋详情 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="房屋详情"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="朝向"
+                            android:textSize="14sp"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tv_orientation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="南北"
+                            android:textSize="14sp"
+                            android:textColor="#333333" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="装修"
+                            android:textSize="14sp"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tv_decoration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="精装修"
+                            android:textSize="14sp"
+                            android:textColor="#333333" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="电梯"
+                            android:textSize="14sp"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tv_elevator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="有"
+                            android:textSize="14sp"
+                            android:textColor="#333333" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="门牌号"
+                            android:textSize="14sp"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tv_house_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3栋2单元1201"
+                            android:textSize="14sp"
+                            android:textColor="#333333" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#F5F5F5" />
+
+            <!-- 房源描述 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="房源描述"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="房子精装修，家具家电齐全，拎包入住。小区环境好，周边配套齐全，交通便利，临近地铁口。"
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
+            <!-- 分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#F5F5F5" />
+
+            <!-- 联系人信息 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系人"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_contact_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="张先生"
+                        android:textSize="16sp"
+                        android:textColor="#333333" />
+
+                    <TextView
+                        android:id="@+id/tv_contact_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="13800138001"
+                        android:textSize="16sp"
+                        android:textColor="@color/blue" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- 底部操作栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp">
+
+        <Button
+            android:id="@+id/btn_call"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="📞 拨打电话"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/orange"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_follow"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="📝 添加跟进"
+            android:textSize="15sp"
+            android:textColor="@color/blue"
+            android:backgroundTint="@color/blue_light" />
+
+    </LinearLayout>
+
+</LinearLayout>

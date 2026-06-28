@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <!-- 左侧图片占位 -->
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/blue_light"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏠"
+                android:textSize="36sp" />
+
+        </LinearLayout>
+
+        <!-- 右侧信息 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <!-- 小区名称 -->
+            <TextView
+                android:id="@+id/tv_community"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小区名称"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <!-- 房型 + 面积 -->
+            <TextView
+                android:id="@+id/tv_room_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="3室2厅 | 98.5㎡"
+                android:textSize="13sp"
+                android:textColor="#666666" />
+
+            <!-- 楼层 + 朝向 + 装修 -->
+            <TextView
+                android:id="@+id/tv_floor_orientation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="12/28层 | 南北 | 精装修"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <!-- 价格 -->
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="3500元/月"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/orange" />
+
+            <!-- 地址 -->
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="街道地址"
+                android:textSize="12sp"
+                android:textColor="#999999"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

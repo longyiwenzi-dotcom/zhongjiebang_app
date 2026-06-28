@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="32dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <!-- Logo 图片 -->
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/logo"
+        android:contentDescription="logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="中介帮"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#1976D2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="小微中介的好帮手"
+        android:textSize="14sp"
+        android:textColor="#666666" />
+
+    <!-- 占位，把按钮往下推 -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
+
+    <!-- 录入房源按钮 -->
+    <Button
+        android:id="@+id/btn_add_house"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="📝 录入房源"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1976D2"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 查询房源按钮 -->
+    <Button
+        android:id="@+id/btn_search_house"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="🔍 查询房源"
+        android:textSize="18sp"
+        android:textColor="#1976D2"
+        android:backgroundTint="#E3F2FD" />
+
+</LinearLayout>

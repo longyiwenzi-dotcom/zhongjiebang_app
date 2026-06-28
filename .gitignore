@@ -1,0 +1,17 @@
+﻿# Android Studio 缓存
+.idea/
+*.iml
+local.properties
+gradle/caches/
+build/
+app/build/
+*.apk
+*.aar
+
+# 系统文件
+Thumbs.db
+.DS_Store
+
+# 日志、环境文件
+*.log
+*.env
