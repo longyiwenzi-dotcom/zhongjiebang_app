@@ -1,17 +1,17 @@
 plugins {
-    alias(libs.plugins.android.application)   // 使用 version catalog（推荐）
+    id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")                         // 启用注解处理
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.zhongjiebang"
-    compileSdk = 36                           // 修正：直接赋值
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.zhongjiebang"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -20,7 +20,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false           // 原 optimization 写法有误，改为标准属性
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -31,8 +31,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {                           // 如果需要 Kotlin 选项（可选）
-        jvmTarget = "11"
+    // 🔧 替换 kotlinOptions 为 compilerOptions
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
     buildFeatures {
         viewBinding = true
@@ -40,21 +41,20 @@ android {
 }
 
 dependencies {
-    // 原有的依赖（来自 version catalog）
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.material)
+    implementation("androidx.activity:activity-ktx:1.8.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
+    implementation("com.google.android.material:material:1.11.0")
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // 新增 Room 依赖（直接写字符串，因为未在 libs 中定义）
+    // Room（使用 KSP）
     implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 }
