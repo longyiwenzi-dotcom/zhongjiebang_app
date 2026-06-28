@@ -341,41 +341,41 @@
 
                     </LinearLayout>
 
+                    <!-- 结款期限（仅出租时显示） -->
+                    <View
+                        android:id="@+id/divider_payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_payment_term_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="结款期限"
+                            android:textSize="14sp"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tv_payment_term"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="押一付三"
+                            android:textSize="14sp"
+                            android:textColor="@color/orange" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- 分割线 -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="#F5F5F5" />
-
-            <!-- 房源描述 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="#FFFFFF">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="房源描述"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:id="@+id/tv_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="房子精装修，家具家电齐全，拎包入住。小区环境好，周边配套齐全，交通便利，临近地铁口。"
-                    android:textSize="14sp"
-                    android:textColor="#666666"
-                    android:lineSpacingExtra="4dp" />
 
             </LinearLayout>
 

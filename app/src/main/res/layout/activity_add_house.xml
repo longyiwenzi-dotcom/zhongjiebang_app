@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,12 +55,53 @@
 
         </LinearLayout>
 
-        <!-- 小区名称 -->
+        <!-- 房源图片上传 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房源照片/视频"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:id="@+id/layout_add_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/border_gray"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textSize="30sp"
+                    android:textColor="@color/gray_mid" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加图片"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_mid" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 小区名称 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,26 +114,43 @@
             <EditText
                 android:id="@+id/et_community"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:hint="请输入小区名称"
                 android:textSize="15sp"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/bg_edit_text"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
+                android:paddingRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
         </LinearLayout>
 
-        <!-- 街道地址 -->
+        <!-- 没有小区复选框 -->
+        <CheckBox
+            android:id="@+id/cb_no_community"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="房源没有所属小区？输入所属街道也可以！"
+            android:textSize="13sp"
+            android:textColor="@color/blue"
+            android:buttonTint="@color/blue"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="4dp" />
+
+        <!-- 所属街道（默认隐藏） -->
         <LinearLayout
+            android:id="@+id/layout_street"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="街道地址"
+                android:text="所属街道"
                 android:textSize="14sp"
                 android:textColor="#333333"
                 android:layout_marginBottom="8dp" />
@@ -99,12 +158,15 @@
             <EditText
                 android:id="@+id/et_address"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:hint="请输入街道地址"
+                android:layout_height="48dp"
+                android:hint="请输入所属街道"
                 android:textSize="15sp"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/bg_edit_text"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
+                android:paddingRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
         </LinearLayout>
 
@@ -126,12 +188,15 @@
             <EditText
                 android:id="@+id/et_house_number"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:hint="例如：3栋2单元501"
                 android:textSize="15sp"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/bg_edit_text"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
+                android:paddingRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
         </LinearLayout>
 
@@ -159,15 +224,18 @@
                 <EditText
                     android:id="@+id/et_room"
                     android:layout_width="0dp"
-                    android:layout_height="44dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:hint="室"
                     android:textSize="15sp"
                     android:inputType="number"
-                    android:background="@android:drawable/edit_text"
+                    android:background="@drawable/bg_edit_text"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,15 +247,18 @@
                 <EditText
                     android:id="@+id/et_hall"
                     android:layout_width="0dp"
-                    android:layout_height="44dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:hint="厅"
                     android:textSize="15sp"
                     android:inputType="number"
-                    android:background="@android:drawable/edit_text"
+                    android:background="@drawable/bg_edit_text"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -199,15 +270,18 @@
                 <EditText
                     android:id="@+id/et_bathroom"
                     android:layout_width="0dp"
-                    android:layout_height="44dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:hint="卫"
                     android:textSize="15sp"
                     android:inputType="number"
-                    android:background="@android:drawable/edit_text"
+                    android:background="@drawable/bg_edit_text"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -238,13 +312,16 @@
             <EditText
                 android:id="@+id/et_area"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:hint="请输入建筑面积"
                 android:textSize="15sp"
                 android:inputType="numberDecimal"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/bg_edit_text"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
+                android:paddingRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
         </LinearLayout>
 
@@ -272,15 +349,18 @@
                 <EditText
                     android:id="@+id/et_floor"
                     android:layout_width="0dp"
-                    android:layout_height="44dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:hint="所在楼层"
                     android:textSize="15sp"
                     android:inputType="number"
-                    android:background="@android:drawable/edit_text"
+                    android:background="@drawable/bg_edit_text"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -292,15 +372,18 @@
                 <EditText
                     android:id="@+id/et_total_floor"
                     android:layout_width="0dp"
-                    android:layout_height="44dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:hint="总楼层"
                     android:textSize="15sp"
                     android:inputType="number"
-                    android:background="@android:drawable/edit_text"
+                    android:background="@drawable/bg_edit_text"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -387,7 +470,7 @@
 
         </LinearLayout>
 
-        <!-- 朝向 -->
+        <!-- 朝向（多选按钮） -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -397,20 +480,111 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="朝向"
+                android:text="朝向（可多选）"
                 android:textSize="14sp"
                 android:textColor="#333333"
                 android:layout_marginBottom="8dp" />
 
-            <EditText
-                android:id="@+id/et_orientation"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:hint="例如：南北通透、朝南"
-                android:textSize="15sp"
-                android:background="@android:drawable/edit_text"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <Button
+                    android:id="@+id/btn_orientation_n"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="北"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_orientation_ne"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="东北"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_orientation_e"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="东"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_orientation_se"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="东南"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_orientation_s"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="南"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_orientation_sw"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="西南"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_orientation_w"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="西"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_orientation_nw"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="西北"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -433,15 +607,106 @@
             <EditText
                 android:id="@+id/et_price"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:hint="请输入价格"
                 android:textSize="15sp"
                 android:inputType="number"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/bg_edit_text"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
+                android:paddingRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
         </LinearLayout>
+
+        <!-- 结款期限（仅出租时显示） -->
+        <LinearLayout
+            android:id="@+id/layout_payment_term"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="结款期限（可多选）"
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_pay_1_1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="押一付一"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_pay_1_3"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="押一付三"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_pay_half"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="半年付"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btn_pay_year"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:text="年付"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/gray_light"
+                    android:textColor="@color/gray_dark" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 分割线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_light"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 隐私提示标题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="以下信息仅您自己可见，其他用户不可查看"
+            android:textSize="15sp"
+            android:textColor="@color/gray_dark"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:background="@color/orange_light" />
 
         <!-- 联系人 -->
         <LinearLayout
@@ -461,12 +726,15 @@
             <EditText
                 android:id="@+id/et_contact_name"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:hint="请输入联系人姓名"
                 android:textSize="15sp"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/bg_edit_text"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
+                android:paddingRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
         </LinearLayout>
 
@@ -475,7 +743,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="24dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -488,40 +756,16 @@
             <EditText
                 android:id="@+id/et_contact_phone"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:hint="请输入联系电话"
                 android:textSize="15sp"
                 android:inputType="phone"
-                android:background="@android:drawable/edit_text"
+                android:background="@drawable/bg_edit_text"
                 android:paddingLeft="12dp"
-                android:paddingRight="12dp" />
-
-        </LinearLayout>
-
-        <!-- 房源描述 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="房源描述"
-                android:textSize="14sp"
-                android:textColor="#333333"
-                android:layout_marginBottom="8dp" />
-
-            <EditText
-                android:id="@+id/et_description"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:hint="请输入房源描述，例如：配套设施、周边环境等"
-                android:textSize="15sp"
-                android:background="@android:drawable/edit_text"
-                android:padding="12dp"
-                android:gravity="top" />
+                android:paddingRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true" />
 
         </LinearLayout>
 

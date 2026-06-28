@@ -3,7 +3,9 @@ package com.example.zhongjiebang
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +26,9 @@ class HouseDetailActivity : AppCompatActivity() {
     private lateinit var tvDecoration: TextView
     private lateinit var tvElevator: TextView
     private lateinit var tvHouseNumber: TextView
-    private lateinit var tvDescription: TextView
+    private lateinit var layoutPaymentTerm: LinearLayout
+    private lateinit var dividerPayment: View
+    private lateinit var tvPaymentTerm: TextView
     private lateinit var tvContactName: TextView
     private lateinit var tvContactPhone: TextView
     private lateinit var btnCall: Button
@@ -61,7 +65,9 @@ class HouseDetailActivity : AppCompatActivity() {
         tvDecoration = findViewById(R.id.tv_decoration)
         tvElevator = findViewById(R.id.tv_elevator)
         tvHouseNumber = findViewById(R.id.tv_house_number)
-        tvDescription = findViewById(R.id.tv_description)
+        layoutPaymentTerm = findViewById(R.id.layout_payment_term_detail)
+        dividerPayment = findViewById(R.id.divider_payment)
+        tvPaymentTerm = findViewById(R.id.tv_payment_term)
         tvContactName = findViewById(R.id.tv_contact_name)
         tvContactPhone = findViewById(R.id.tv_contact_phone)
         btnCall = findViewById(R.id.btn_call)
@@ -81,13 +87,20 @@ class HouseDetailActivity : AppCompatActivity() {
         tvFloor.text = house.getFloorDesc()
 
         // 房屋详情
-        tvOrientation.text = house.orientation
-        tvDecoration.text = house.decoration
+        tvOrientation.text = house.getOrientationDesc()
+        tvDecoration.text = house.decoration.ifEmpty { "未填写" }
         tvElevator.text = if (house.hasElevator) "有" else "无"
         tvHouseNumber.text = house.houseNumber.ifEmpty { "未填写" }
 
-        // 房源描述
-        tvDescription.text = house.description.ifEmpty { "暂无描述" }
+        // 结款期限（仅出租且有值时显示）
+        if (house.isRent && house.paymentTerm.isNotEmpty()) {
+            layoutPaymentTerm.visibility = View.VISIBLE
+            dividerPayment.visibility = View.VISIBLE
+            tvPaymentTerm.text = house.paymentTerm
+        } else {
+            layoutPaymentTerm.visibility = View.GONE
+            dividerPayment.visibility = View.GONE
+        }
 
         // 联系人
         tvContactName.text = house.contactName

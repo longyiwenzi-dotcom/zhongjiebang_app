@@ -32,6 +32,7 @@ class HouseListAdapter(
         private val tvRoomArea: TextView = itemView.findViewById(R.id.tv_room_area)
         private val tvFloorOrientation: TextView = itemView.findViewById(R.id.tv_floor_orientation)
         private val tvPrice: TextView = itemView.findViewById(R.id.tv_price)
+        private val tvPaymentTerm: TextView = itemView.findViewById(R.id.tv_payment_term)
         private val tvAddress: TextView = itemView.findViewById(R.id.tv_address)
 
         fun bind(house: House) {
@@ -42,14 +43,22 @@ class HouseListAdapter(
             tvRoomArea.text = "${house.getRoomDesc()} | ${house.area}㎡"
 
             // 楼层 + 朝向 + 装修
-            val floorOrientation = "${house.getFloorDesc()} | ${house.orientation} | ${house.decoration}"
+            val floorOrientation = "${house.getFloorDesc()} | ${house.getOrientationDesc()} | ${house.decoration}"
             tvFloorOrientation.text = floorOrientation
 
             // 价格
             tvPrice.text = house.getPriceDesc()
 
-            // 地址
-            tvAddress.text = house.address
+            // 结款期限（仅出租且有值时显示）
+            if (house.isRent && house.paymentTerm.isNotEmpty()) {
+                tvPaymentTerm.visibility = View.VISIBLE
+                tvPaymentTerm.text = house.paymentTerm.split(",").firstOrNull() ?: ""
+            } else {
+                tvPaymentTerm.visibility = View.GONE
+            }
+
+            // 地址/街道
+            tvAddress.text = if (house.address.isNotEmpty()) house.address else house.houseNumber
 
             // 点击事件
             itemView.setOnClickListener {

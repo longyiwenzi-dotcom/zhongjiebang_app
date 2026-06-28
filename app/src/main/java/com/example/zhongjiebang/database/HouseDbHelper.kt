@@ -14,7 +14,7 @@ class HouseDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
 
     companion object {
         private const val DATABASE_NAME = "zhongjiebang.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2  // 升级版本，删表重建
         private const val TABLE_HOUSES = "houses"
     }
 
@@ -37,9 +37,9 @@ class HouseDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
                 decoration TEXT,
                 orientation TEXT,
                 price INTEGER DEFAULT 0,
+                paymentTerm TEXT,
                 contactName TEXT,
                 contactPhone TEXT,
-                description TEXT,
                 createTime INTEGER NOT NULL
             )
         """.trimIndent()
@@ -72,9 +72,9 @@ class HouseDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
             put("decoration", house.decoration)
             put("orientation", house.orientation)
             put("price", house.price)
+            put("paymentTerm", house.paymentTerm)
             put("contactName", house.contactName)
             put("contactPhone", house.contactPhone)
-            put("description", house.description)
             put("createTime", System.currentTimeMillis())
         }
         return db.insert(TABLE_HOUSES, null, values)
@@ -145,9 +145,9 @@ class HouseDbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
             decoration = cursor.getString(cursor.getColumnIndexOrThrow("decoration")) ?: "",
             orientation = cursor.getString(cursor.getColumnIndexOrThrow("orientation")) ?: "",
             price = cursor.getInt(cursor.getColumnIndexOrThrow("price")),
+            paymentTerm = cursor.getString(cursor.getColumnIndexOrThrow("paymentTerm")) ?: "",
             contactName = cursor.getString(cursor.getColumnIndexOrThrow("contactName")) ?: "",
             contactPhone = cursor.getString(cursor.getColumnIndexOrThrow("contactPhone")) ?: "",
-            description = cursor.getString(cursor.getColumnIndexOrThrow("description")) ?: "",
             createTime = cursor.getLong(cursor.getColumnIndexOrThrow("createTime"))
         )
     }

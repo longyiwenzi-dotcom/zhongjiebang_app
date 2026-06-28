@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +29,7 @@ class HouseListActivity : AppCompatActivity() {
     // 各个复选框
     private lateinit var cbCommunity: CheckBox
     private lateinit var cbPrice: CheckBox
+    private lateinit var cbPaymentTerm: CheckBox
     private lateinit var cbRoom: CheckBox
     private lateinit var cbFloor: CheckBox
     private lateinit var cbElevator: CheckBox
@@ -64,12 +66,21 @@ class HouseListActivity : AppCompatActivity() {
     private lateinit var btnPurposeShop: Button
     private lateinit var btnPurposeGarage: Button
 
+    // 结款期限按钮
+    private lateinit var layoutPaymentTerm: LinearLayout
+    private lateinit var btnPay11: Button
+    private lateinit var btnPay13: Button
+    private lateinit var btnPayHalf: Button
+    private lateinit var btnPayYear: Button
+
     // 记录选中的房型
     private val selectedRooms = mutableSetOf<Int>()
     // 记录选中的装修
     private val selectedDecorations = mutableSetOf<String>()
     // 记录选中的用途
     private val selectedPurposes = mutableSetOf<String>()
+    // 记录选中的结款期限
+    private val selectedPaymentTerms = mutableSetOf<String>()
 
     // 房源列表
     private lateinit var recyclerView: RecyclerView
@@ -110,6 +121,7 @@ class HouseListActivity : AppCompatActivity() {
 
         cbCommunity = findViewById(R.id.cb_community)
         cbPrice = findViewById(R.id.cb_price)
+        cbPaymentTerm = findViewById(R.id.cb_payment_term)
         cbRoom = findViewById(R.id.cb_room)
         cbFloor = findViewById(R.id.cb_floor)
         cbElevator = findViewById(R.id.cb_elevator)
@@ -137,6 +149,13 @@ class HouseListActivity : AppCompatActivity() {
         btnPurposeHouse = findViewById(R.id.btn_purpose_house)
         btnPurposeShop = findViewById(R.id.btn_purpose_shop)
         btnPurposeGarage = findViewById(R.id.btn_purpose_garage)
+
+        // 结款期限
+        layoutPaymentTerm = findViewById(R.id.layout_payment_term)
+        btnPay11 = findViewById(R.id.btn_pay_1_1)
+        btnPay13 = findViewById(R.id.btn_pay_1_3)
+        btnPayHalf = findViewById(R.id.btn_pay_half)
+        btnPayYear = findViewById(R.id.btn_pay_year)
 
         // 初始化 RecyclerView
         recyclerView = findViewById(R.id.recycler_view)
@@ -172,6 +191,19 @@ class HouseListActivity : AppCompatActivity() {
         cbPrice.setOnCheckedChangeListener { _, isChecked ->
             etPriceMin.isEnabled = isChecked
             etPriceMax.isEnabled = isChecked
+            filterHouses()
+        }
+
+        // 结款期限复选框
+        cbPaymentTerm.setOnCheckedChangeListener { _, isChecked ->
+            btnPay11.isEnabled = isChecked
+            btnPay13.isEnabled = isChecked
+            btnPayHalf.isEnabled = isChecked
+            btnPayYear.isEnabled = isChecked
+            if (!isChecked) {
+                selectedPaymentTerms.clear()
+                updatePaymentButtons()
+            }
             filterHouses()
         }
 
@@ -239,6 +271,12 @@ class HouseListActivity : AppCompatActivity() {
         setupPurposeButton(btnPurposeShop, "商铺")
         setupPurposeButton(btnPurposeGarage, "车库")
 
+        // 结款期限按钮点击
+        setupPaymentButton(btnPay11, "押一付一")
+        setupPaymentButton(btnPay13, "押一付三")
+        setupPaymentButton(btnPayHalf, "半年付")
+        setupPaymentButton(btnPayYear, "年付")
+
         // 输入框文字变化监听，实时筛选
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -297,6 +335,18 @@ class HouseListActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupPaymentButton(button: Button, payment: String) {
+        button.setOnClickListener {
+            if (selectedPaymentTerms.contains(payment)) {
+                selectedPaymentTerms.remove(payment)
+            } else {
+                selectedPaymentTerms.add(payment)
+            }
+            updatePaymentButtons()
+            filterHouses()
+        }
+    }
+
     private fun updateRoomButtons() {
         updateButtonSelected(btnRoom1, selectedRooms.contains(1))
         updateButtonSelected(btnRoom2, selectedRooms.contains(2))
@@ -318,6 +368,13 @@ class HouseListActivity : AppCompatActivity() {
         updateButtonSelected(btnPurposeGarage, selectedPurposes.contains("车库"))
     }
 
+    private fun updatePaymentButtons() {
+        updateButtonSelected(btnPay11, selectedPaymentTerms.contains("押一付一"))
+        updateButtonSelected(btnPay13, selectedPaymentTerms.contains("押一付三"))
+        updateButtonSelected(btnPayHalf, selectedPaymentTerms.contains("半年付"))
+        updateButtonSelected(btnPayYear, selectedPaymentTerms.contains("年付"))
+    }
+
     private fun updateButtonSelected(button: Button, isSelected: Boolean) {
         if (isSelected) {
             button.backgroundTintList = ContextCompat.getColorStateList(this, R.color.orange)
@@ -333,10 +390,12 @@ class HouseListActivity : AppCompatActivity() {
             btnTypeSwitch.text = "出租房源"
             cbPrice.text = "租金"
             supportActionBar?.title = "出租房源"
+            layoutPaymentTerm.visibility = LinearLayout.VISIBLE
         } else {
             btnTypeSwitch.text = "出售房源"
             cbPrice.text = "售价"
             supportActionBar?.title = "出售房源"
+            layoutPaymentTerm.visibility = LinearLayout.GONE
         }
     }
 
@@ -363,6 +422,7 @@ class HouseListActivity : AppCompatActivity() {
         // 取消所有复选框
         cbCommunity.isChecked = false
         cbPrice.isChecked = false
+        cbPaymentTerm.isChecked = false
         cbRoom.isChecked = false
         cbFloor.isChecked = false
         cbElevator.isChecked = false
@@ -381,9 +441,11 @@ class HouseListActivity : AppCompatActivity() {
         selectedRooms.clear()
         selectedDecorations.clear()
         selectedPurposes.clear()
+        selectedPaymentTerms.clear()
         updateRoomButtons()
         updateDecorationButtons()
         updatePurposeButtons()
+        updatePaymentButtons()
     }
 
     /**
@@ -415,6 +477,17 @@ class HouseListActivity : AppCompatActivity() {
                     return@filter false
                 }
                 if (maxPrice != null && house.price > maxPrice) {
+                    return@filter false
+                }
+            }
+
+            // 2.5 结款期限筛选（仅出租时）
+            if (isRent && cbPaymentTerm.isChecked && selectedPaymentTerms.isNotEmpty()) {
+                val housePayments = house.paymentTerm.split(",")
+                val matchPayment = selectedPaymentTerms.any { selected ->
+                    housePayments.contains(selected)
+                }
+                if (!matchPayment) {
                     return@filter false
                 }
             }

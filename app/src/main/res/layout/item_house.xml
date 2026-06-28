@@ -73,15 +73,38 @@
                 android:ellipsize="end" />
 
             <!-- 价格 -->
-            <TextView
-                android:id="@+id/tv_price"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="3500元/月"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/orange" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3500元/月"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/orange" />
+
+                <TextView
+                    android:id="@+id/tv_payment_term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="押一付三"
+                    android:textSize="12sp"
+                    android:textColor="@color/orange_dark"
+                    android:background="@color/orange_light"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
             <!-- 地址 -->
             <TextView
