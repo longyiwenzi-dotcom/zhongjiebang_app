@@ -22,9 +22,9 @@ fun HouseEntity.toHouse(): House {
         decoration = this.decoration,
         orientation = this.orientation,
         price = this.price,
+        paymentTerm = "",            // ⚠️ 注意：这里新增了 paymentTerm
         contactName = this.contactName,
         contactPhone = this.contactPhone,
-        description = this.description,
         createTime = this.createTime
     )
 }
@@ -51,7 +51,7 @@ fun House.toEntity(): HouseEntity {
         price = this.price,
         contactName = this.contactName,
         contactPhone = this.contactPhone,
-        description = this.description,
+        description = "",            // ⚠️ 注意：这里新增了 description
         createTime = this.createTime
     )
 }
