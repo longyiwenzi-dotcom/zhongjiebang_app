@@ -23,6 +23,9 @@ spring:
         - id: membership
           uri: lb://zjb-membership
           predicates: [ Path=/cloud/api/memberships/** ]
+        - id: audit
+          uri: lb://zjb-audit
+          predicates: [ Path=/cloud/api/audit/** ]
   data:
     redis:
       host: ${REDIS_HOST:127.0.0.1}

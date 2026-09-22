@@ -10,6 +10,7 @@ This project is independent from the production modular monolith. It demonstrate
 | `user-app` | 9101 | Registration, BCrypt password authentication and session issue |
 | `house-app` | 9102 | House detail API and OpenFeign membership check |
 | `membership-app` | 9103 | Permission, one-time redemption and Seata transaction boundary |
+| `audit-app` | 9104 | RabbitMQ consumer for browsing history and audit events |
 | `contracts` | - | Stable inter-service DTO contracts |
 
 ```mermaid
@@ -18,9 +19,11 @@ flowchart LR
     Gateway --> User[User service]
     Gateway --> House[House service]
     Gateway --> Member[Membership service]
+    Gateway --> Audit[Audit service]
     House -->|OpenFeign| Member
     Gateway & User --> Redis[(Redis sessions)]
     Member --> MySQL[(MySQL)]
+    House -->|RabbitMQ event| Audit
     Gateway & House -.-> Sentinel[Sentinel]
     Gateway & User & House & Member --> Nacos[Nacos]
     Member -. global transaction .-> Seata[Seata]
@@ -30,7 +33,7 @@ The house service uses a fail-closed fallback: if membership is unavailable, pai
 
 ## Run locally
 
-1. `docker compose up -d mysql redis nacos sentinel zipkin`
+1. `docker compose up -d mysql redis rabbitmq nacos sentinel zipkin`
 2. `mvn clean package`
 3. Start `UserApplication`, `MembershipApplication`, `HouseApplication`, then `GatewayApplication` from the IDE.
 4. Register and receive an opaque session token:
@@ -48,7 +51,7 @@ curl http://127.0.0.1:9000/cloud/api/houses/1001 \
   -H "Authorization: Bearer <accessToken>"
 ```
 
-Nacos is available at `http://127.0.0.1:8848/nacos`, Sentinel at `http://127.0.0.1:8858`, and Zipkin traces at `http://127.0.0.1:9411`.
+Nacos is at `http://127.0.0.1:8848/nacos`, Sentinel at `http://127.0.0.1:8858`, RabbitMQ at `http://127.0.0.1:15672`, and Zipkin at `http://127.0.0.1:9411`.
 
 To run the four applications in containers instead of the IDE, package first and then start the `apps` profile:
 

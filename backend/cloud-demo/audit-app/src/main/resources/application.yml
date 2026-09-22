@@ -1,0 +1,18 @@
+server.port: 9104
+spring:
+  application.name: zjb-audit
+  config.import: optional:nacos:zjb-audit.yml
+  cloud.nacos.discovery.server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3307}/zhongjiebang_cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root-local-only}
+  rabbitmq:
+    host: ${RABBITMQ_HOST:127.0.0.1}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+management.endpoints.web.exposure.include: health,info
+management:
+  tracing.sampling.probability: ${TRACING_SAMPLE_RATE:1.0}
+  zipkin.tracing.endpoint: ${ZIPKIN_ENDPOINT:http://127.0.0.1:9411/api/v2/spans}

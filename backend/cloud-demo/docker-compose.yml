@@ -34,6 +34,9 @@ services:
   zipkin:
     image: openzipkin/zipkin:3.4
     ports: [ "9411:9411" ]
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    ports: [ "5672:5672", "15672:15672" ]
   seata:
     image: apache/seata-server:2.2.0
     profiles: [ "seata" ]
@@ -57,7 +60,10 @@ services:
       MYSQL_PASSWORD: root-local-only
       SENTINEL_DASHBOARD: sentinel:8858
       ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
-    depends_on: [ mysql, redis, nacos, zipkin ]
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+    depends_on: [ mysql, redis, rabbitmq, nacos, zipkin ]
     ports: [ "9101:9101" ]
   membership-app:
     profiles: [ "apps" ]
@@ -73,7 +79,7 @@ services:
       context: .
       args: { JAR_FILE: "house-app/target/house-app-1.0.0-SNAPSHOT.jar" }
     environment: *app-environment
-    depends_on: [ membership-app, nacos, sentinel, zipkin ]
+    depends_on: [ membership-app, rabbitmq, nacos, sentinel, zipkin ]
     ports: [ "9102:9102" ]
   gateway:
     profiles: [ "apps" ]
@@ -81,8 +87,16 @@ services:
       context: .
       args: { JAR_FILE: "gateway/target/gateway-1.0.0-SNAPSHOT.jar" }
     environment: *app-environment
-    depends_on: [ user-app, house-app, membership-app, redis, nacos, sentinel, zipkin ]
+    depends_on: [ user-app, house-app, membership-app, audit-app, redis, nacos, sentinel, zipkin ]
     ports: [ "9000:9000" ]
+  audit-app:
+    profiles: [ "apps" ]
+    build:
+      context: .
+      args: { JAR_FILE: "audit-app/target/audit-app-1.0.0-SNAPSHOT.jar" }
+    environment: *app-environment
+    depends_on: [ mysql, rabbitmq, nacos, zipkin ]
+    ports: [ "9104:9104" ]
 volumes:
   cloud_mysql:
   cloud_redis:
