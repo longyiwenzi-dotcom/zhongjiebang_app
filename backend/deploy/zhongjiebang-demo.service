@@ -1,0 +1,17 @@
+[Unit]
+Description=Zhongjiebang Java interview demo
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=admin
+WorkingDirectory=/opt/zhongjiebang-demo
+EnvironmentFile=/etc/zhongjiebang-demo.env
+ExecStart=/usr/bin/java -Xms192m -Xmx512m -jar /opt/zhongjiebang-demo/bootstrap.jar
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

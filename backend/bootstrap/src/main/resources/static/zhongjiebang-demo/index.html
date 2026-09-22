@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>哈市中介帮 · Java 工程演示</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; background: Canvas; color: CanvasText; }
+    main { width: min(960px, calc(100% - 32px)); margin: 48px auto; }
+    header { border-bottom: 3px solid #0000ff; padding-bottom: 24px; }
+    h1 { margin: 0 0 8px; font-size: clamp(32px, 6vw, 56px); letter-spacing: 0; }
+    .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    a { color: #0000ff; font-weight: 700; }
+    .primary { background: #0000ff; color: #fff; padding: 12px 18px; text-decoration: none; }
+    section { padding: 28px 0; border-bottom: 1px solid color-mix(in srgb, CanvasText 18%, transparent); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; }
+    article { border: 1px solid color-mix(in srgb, CanvasText 24%, transparent); padding: 18px; border-radius: 4px; }
+    article h3 { margin-top: 0; }
+    code { overflow-wrap: anywhere; }
+    @media (prefers-color-scheme: dark) {
+      header { border-color: #fff; }
+      a { color: #fff; }
+      .primary { background: #fff; color: #000; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p>Java 17 · Spring Boot · MySQL · Flyway</p>
+    <h1>哈市中介帮</h1>
+    <p>从真实房源业务重构出的 Java 后端工程，重点展示鉴权、数据权限、事务和并发安全。</p>
+    <div class="links">
+      <a class="primary" href="/zhongjiebang-demo/docs">查看接口文档</a>
+      <a href="https://github.com/longyiwenzi-dotcom/zhongjiebang_app" target="_blank" rel="noopener">GitHub 源码</a>
+      <a href="/resume/">返回在线简历</a>
+    </div>
+  </header>
+  <section>
+    <h2>核心模块</h2>
+    <div class="grid">
+      <article><h3>账号与安全</h3><p>BCrypt 密码、摘要化令牌、无状态鉴权和服务端身份识别。</p></article>
+      <article><h3>房源业务</h3><p>组合搜索、分页、私密字段隔离，以及上传人的数据权限。</p></article>
+      <article><h3>会员权益</h3><p>会员期限、每日查看额度和同一房源当日去重。</p></article>
+      <article><h3>兑换事务</h3><p>26 位兑换码摘要存储，行锁与条件更新保证只消费一次。</p></article>
+    </div>
+  </section>
+  <section>
+    <h2>演示入口</h2>
+    <p>健康检查：<code>/actuator/health</code></p>
+    <p>OpenAPI：<code>/v3/api-docs</code></p>
+    <p>业务 API：<code>/zhongjiebang-demo/api/v1</code></p>
+  </section>
+</main>
+</body>
+</html>

@@ -1,5 +1,6 @@
 ﻿# Android Studio 缓存
 .idea/
+.gradle/
 *.iml
 local.properties
 gradle/caches/
@@ -15,3 +16,16 @@ Thumbs.db
 # 日志、环境文件
 *.log
 *.env
+
+# Signing material and local credentials
+*.jks
+*.keystore
+keystore.properties
+
+# Generated/private business data
+membership_codes.txt
+server/src/main/resources/redeem-codes.csv
+
+# Backend build and runtime data
+**/target/
+uploads/
