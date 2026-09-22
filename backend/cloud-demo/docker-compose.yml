@@ -31,6 +31,9 @@ services:
   sentinel:
     image: bladex/sentinel-dashboard:1.8.8
     ports: [ "8858:8858" ]
+  zipkin:
+    image: openzipkin/zipkin:3.4
+    ports: [ "9411:9411" ]
   seata:
     image: apache/seata-server:2.2.0
     profiles: [ "seata" ]

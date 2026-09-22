@@ -1,3 +1,11 @@
+create table if not exists cloud_users (
+    id bigint primary key auto_increment,
+    phone char(11) not null unique,
+    password_hash varchar(100) not null,
+    active boolean not null default true,
+    created_at datetime(3) not null default current_timestamp(3)
+);
+
 create table if not exists cloud_memberships (
     user_id bigint primary key,
     plan_code varchar(20) not null,

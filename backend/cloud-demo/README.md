@@ -6,8 +6,8 @@ This project is independent from the production modular monolith. It demonstrate
 
 | Module | Port | Responsibility |
 | --- | ---: | --- |
-| `gateway` | 9000 | Gateway routing, unified ingress and Sentinel integration |
-| `user-app` | 9101 | User boundary and Redis integration point |
+| `gateway` | 9000 | Routing, Redis session authentication and Sentinel integration |
+| `user-app` | 9101 | Registration, BCrypt password authentication and session issue |
 | `house-app` | 9102 | House detail API and OpenFeign membership check |
 | `membership-app` | 9103 | Permission, one-time redemption and Seata transaction boundary |
 | `contracts` | - | Stable inter-service DTO contracts |
@@ -19,7 +19,7 @@ flowchart LR
     Gateway --> House[House service]
     Gateway --> Member[Membership service]
     House -->|OpenFeign| Member
-    User --> Redis[(Redis)]
+    Gateway & User --> Redis[(Redis sessions)]
     Member --> MySQL[(MySQL)]
     Gateway & House -.-> Sentinel[Sentinel]
     Gateway & User & House & Member --> Nacos[Nacos]
@@ -30,16 +30,40 @@ The house service uses a fail-closed fallback: if membership is unavailable, pai
 
 ## Run locally
 
-1. `docker compose up -d mysql redis nacos sentinel`
+1. `docker compose up -d mysql redis nacos sentinel zipkin`
 2. `mvn clean package`
 3. Start `UserApplication`, `MembershipApplication`, `HouseApplication`, then `GatewayApplication` from the IDE.
-4. Run `curl -H "X-User-Id: 1" http://127.0.0.1:9000/cloud/api/houses/1001`.
+4. Register and receive an opaque session token:
+
+```bash
+curl -X POST http://127.0.0.1:9000/cloud/api/users/register \
+  -H "Content-Type: application/json" \
+  -d '{"phone":"18100000001","password":"DemoPass123"}'
+```
+
+5. Use the returned `accessToken`; the gateway resolves the user and overwrites any client-supplied identity header:
+
+```bash
+curl http://127.0.0.1:9000/cloud/api/houses/1001 \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+Nacos is available at `http://127.0.0.1:8848/nacos`, Sentinel at `http://127.0.0.1:8858`, and Zipkin traces at `http://127.0.0.1:9411`.
 
 Start Seata only for the transaction demonstration: `docker compose --profile seata up -d seata`. Set `SEATA_ENABLED=true` after its registry and service-group configuration is ready.
 
 ## Interview scenarios
 
 - Stop membership service: the Sentinel/Feign fallback denies the detail request.
+- Send a fake `X-User-Id`: the gateway removes it and derives identity only from the Redis session.
 - Redeem one code concurrently: the conditional update permits one successful consumer.
 - Disable Redis: the production app falls back to in-memory rate limiting for single-node operation.
 - Explain deployment: the public 2 GB host runs the modular monolith; this full stack is a local architecture exercise.
+
+## Security decisions
+
+- Passwords use BCrypt with cost 12.
+- Access tokens are opaque random values; Redis stores only SHA-256 token digests.
+- Sessions expire after 12 hours and identity headers are never trusted from the public client.
+- Membership degradation is fail-closed so a dependency outage cannot expose paid data.
+- Nacos authentication is disabled only in the local Compose environment and must not be copied to a public server.

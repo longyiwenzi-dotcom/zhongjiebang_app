@@ -23,4 +23,11 @@ spring:
         - id: membership
           uri: lb://zjb-membership
           predicates: [ Path=/cloud/api/memberships/** ]
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
 management.endpoints.web.exposure.include: health,info,gateway
+management:
+  tracing.sampling.probability: ${TRACING_SAMPLE_RATE:1.0}
+  zipkin.tracing.endpoint: ${ZIPKIN_ENDPOINT:http://127.0.0.1:9411/api/v2/spans}

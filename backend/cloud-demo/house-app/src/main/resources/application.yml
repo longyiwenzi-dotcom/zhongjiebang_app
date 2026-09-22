@@ -7,3 +7,6 @@ spring:
     sentinel.transport.dashboard: ${SENTINEL_DASHBOARD:127.0.0.1:8858}
 feign.sentinel.enabled: true
 management.endpoints.web.exposure.include: health,info
+management:
+  tracing.sampling.probability: ${TRACING_SAMPLE_RATE:1.0}
+  zipkin.tracing.endpoint: ${ZIPKIN_ENDPOINT:http://127.0.0.1:9411/api/v2/spans}
