@@ -1,0 +1,7 @@
+server.port: 9101
+spring:
+  config.import: optional:nacos:zjb-user.yml
+  application.name: zjb-user
+  cloud.nacos.discovery.server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+  data.redis.host: ${REDIS_HOST:127.0.0.1}
+management.endpoints.web.exposure.include: health,info

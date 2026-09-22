@@ -17,6 +17,15 @@ spring:
     validate-on-migrate: true
   jackson:
     default-property-inclusion: non_null
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      timeout: 2s
+
+app:
+  redis-rate-limit:
+    enabled: ${REDIS_RATE_LIMIT_ENABLED:false}
 
 management:
   endpoints:

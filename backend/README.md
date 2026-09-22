@@ -3,6 +3,13 @@
 这是从现有 Android + Spring Boot 项目演进出的独立演示后端。它使用 Java 17、Spring Boot、
 Spring Security、JDBC、Flyway 和 MySQL，重点展示真实业务规则、鉴权、事务和并发安全。
 
+## 两种部署形态
+
+- 当前目录的业务模块打包为模块化单体，适合公网 2 GB 服务器：只运行一个 Java 进程，但保留清晰领域边界。
+- [`cloud-demo`](cloud-demo/README.md) 是本地 Spring Cloud 面试环境，包含 Nacos、Gateway、OpenFeign、Sentinel、Seata 和 Redis。
+
+正式 API 设置 `REDIS_RATE_LIMIT_ENABLED=true` 后启用多实例共享限流；未启用时使用内存实现，保证单机演示不依赖 Redis 也能启动。
+
 ## 模块
 
 - `common`：值对象、业务异常、分页模型。

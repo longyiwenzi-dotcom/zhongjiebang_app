@@ -1,4 +1,11 @@
 services:
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - demo_redis:/data
   mysql:
     image: mysql:8.4
     environment:
@@ -19,3 +26,4 @@ services:
 
 volumes:
   demo_mysql:
+  demo_redis:

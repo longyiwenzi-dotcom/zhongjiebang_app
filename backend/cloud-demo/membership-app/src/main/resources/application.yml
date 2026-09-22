@@ -1,0 +1,15 @@
+server.port: 9103
+spring:
+  config.import: optional:nacos:zjb-membership.yml
+  application.name: zjb-membership
+  cloud:
+    nacos.discovery.server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+    sentinel.transport.dashboard: ${SENTINEL_DASHBOARD:127.0.0.1:8858}
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:3307/zhongjiebang_cloud?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root-local-only}
+seata:
+  enabled: ${SEATA_ENABLED:false}
+  tx-service-group: zjb_tx_group
+management.endpoints.web.exposure.include: health,info

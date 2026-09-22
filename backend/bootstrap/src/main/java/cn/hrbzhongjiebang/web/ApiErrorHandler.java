@@ -18,6 +18,7 @@ public class ApiErrorHandler {
             case "FORBIDDEN", "MEMBERSHIP_REQUIRED", "DAILY_LIMIT_REACHED" -> HttpStatus.FORBIDDEN;
             case "HOUSE_NOT_FOUND", "USER_NOT_FOUND" -> HttpStatus.NOT_FOUND;
             case "PHONE_REGISTERED", "REDEEM_CODE_USED" -> HttpStatus.CONFLICT;
+            case "RATE_LIMITED" -> HttpStatus.TOO_MANY_REQUESTS;
             default -> HttpStatus.BAD_REQUEST;
         };
         return ResponseEntity.status(status).body(Map.of(

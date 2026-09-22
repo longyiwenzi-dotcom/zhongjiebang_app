@@ -1,0 +1,26 @@
+server:
+  port: 9000
+spring:
+  config:
+    import: optional:nacos:zjb-gateway.yml
+  application:
+    name: zjb-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD:127.0.0.1:8858}
+    gateway:
+      routes:
+        - id: user
+          uri: lb://zjb-user
+          predicates: [ Path=/cloud/api/users/** ]
+        - id: house
+          uri: lb://zjb-house
+          predicates: [ Path=/cloud/api/houses/** ]
+        - id: membership
+          uri: lb://zjb-membership
+          predicates: [ Path=/cloud/api/memberships/** ]
+management.endpoints.web.exposure.include: health,info,gateway
