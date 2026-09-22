@@ -14,3 +14,5 @@ OpenAPI、自动化测试和 CI。详细运行方式见 [backend/README.md](back
 在线演示部署后通过 `/zhongjiebang-demo/` 访问，原在线简历 `/resume/` 保持不变。
 
 项目地址：[github.com/longyiwenzi-dotcom/zhongjiebang_app](https://github.com/longyiwenzi-dotcom/zhongjiebang_app)
+
+面试复习材料：[哈市中介帮 Java 项目面试知识点](deliverables/哈市中介帮-Java项目面试知识点.pptx)

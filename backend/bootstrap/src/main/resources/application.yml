@@ -28,6 +28,9 @@ app:
     enabled: ${REDIS_RATE_LIMIT_ENABLED:false}
 
 management:
+  health:
+    redis:
+      enabled: ${REDIS_RATE_LIMIT_ENABLED:false}
   endpoints:
     web:
       exposure:

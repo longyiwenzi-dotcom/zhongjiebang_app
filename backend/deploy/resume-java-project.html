@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>哈市中介帮｜技术架构与服务</title>
+  <meta name="description" content="哈市中介帮 Java 后端功能、接口、服务与技术架构。">
+  <style>
+    :root{color-scheme:light dark;--bg:#fff;--fg:#111318;--muted:#626975;--line:#dfe3ea;--soft:#f4f6f8;--blue:#0000ff;--green:#008a58}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font-family:"Microsoft YaHei",system-ui,sans-serif;line-height:1.75;letter-spacing:0}
+    header,main,footer{width:min(1120px,calc(100% - 40px));margin:auto}header{display:flex;align-items:center;justify-content:space-between;padding:26px 0;border-bottom:1px solid var(--line)}
+    a{color:var(--blue);text-decoration:none;font-weight:700}.brand{font-size:20px;color:var(--fg)}nav{display:flex;gap:22px;flex-wrap:wrap}
+    .hero{padding:72px 0 54px}.eyebrow{color:var(--blue);font-size:14px;font-weight:800}.hero h1{font-size:clamp(38px,7vw,72px);line-height:1.12;margin:12px 0 24px}.lead{font-size:clamp(19px,2.6vw,28px);max-width:850px;font-weight:700}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}.button{display:inline-block;padding:10px 18px;border:1px solid var(--line)}.primary{background:var(--blue);color:white;border-color:var(--blue)}
+    section{padding:48px 0;border-top:1px solid var(--line)}h2{font-size:32px;margin:0 0 28px}h3{font-size:21px;margin:0 0 10px;color:var(--blue)}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 56px}.item{padding-left:18px;border-left:4px solid var(--blue)}.item p{margin:0;color:var(--muted)}
+    .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.step{background:var(--soft);padding:18px 14px;min-height:104px}.step b{display:block;color:var(--blue);margin-bottom:8px}
+    .qa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}.qa article{border-top:3px solid var(--blue);padding-top:16px}.qa p{color:var(--muted)}
+    code{background:var(--soft);padding:2px 6px}footer{padding:42px 0 80px;color:var(--muted)}
+    @media(max-width:760px){header{align-items:flex-start;gap:18px;flex-direction:column}.grid,.qa{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.hero{padding-top:46px}}
+    @media(prefers-color-scheme:dark){:root{--bg:#0b0b0d;--fg:#fff;--muted:#c4c7ce;--line:#35363b;--soft:#17181c;--blue:#fff;--green:#75e2b8}.primary{background:#fff;color:#000;border-color:#fff}}
+  </style>
+</head>
+<body>
+<header><a class="brand" href="/resume/">Z·ZB / RESUME</a><nav><a href="#architecture">架构</a><a href="#implementation">功能与接口</a><a href="#services">服务</a></nav></header>
+<main>
+  <div class="hero"><p class="eyebrow">JAVA PROJECT CASE</p><h1>哈市中介帮<br>Java 后端重构</h1><p class="lead">面向真实房产中介业务，处理账号身份、房源隐私、会员额度、一次性兑换码和浏览历史。线上采用模块化单体，本地提供完整微服务演示。</p><div class="actions"><a class="button primary" href="/zhongjiebang-demo/">访问项目</a><a class="button" href="https://github.com/longyiwenzi-dotcom/zhongjiebang_app" target="_blank" rel="noopener">GitHub 源码</a></div></div>
+
+  <section id="architecture"><h2>架构与取舍</h2><div class="grid">
+    <div class="item"><h3>线上模块化单体</h3><p>2 GB 公网服务器只运行一个 Java 进程。用户、房源和会员按领域拆分模块，共享数据库事务，降低内存与运维成本。</p></div>
+    <div class="item"><h3>本地 Spring Cloud</h3><p>Gateway、Nacos、OpenFeign、Sentinel、Redis、RabbitMQ、Zipkin 与 Seata 用于服务治理和分布式场景演示。</p></div>
+    <div class="item"><h3>统一身份入口</h3><p>Gateway 删除外部 <code>X-User-Id</code>，根据 Redis 中的会话摘要写入可信身份，防止客户端伪造用户编号。</p></div>
+    <div class="item"><h3>失败策略</h3><p>会员服务故障时默认拒绝详情访问。系统无法确认权限时不放行付费数据。</p></div>
+  </div></section>
+
+  <section id="implementation"><h2>核心调用链</h2><div class="flow">
+    <div class="step"><b>01 登录</b>BCrypt 校验密码</div><div class="step"><b>02 会话</b>Redis 保存令牌摘要</div><div class="step"><b>03 房源</b>MySQL 分页筛选</div><div class="step"><b>04 权限</b>会员额度事务扣次</div><div class="step"><b>05 审计</b>RabbitMQ 异步记录</div>
+  </div></section>
+
+  <section id="services"><h2>功能、接口与服务</h2><div class="grid">
+    <div class="item"><h3>密码与令牌</h3><p>密码使用 BCrypt cost 12。访问令牌为随机不透明字符串，Redis 只保存 SHA-256 摘要并设置 12 小时有效期。</p></div>
+    <div class="item"><h3>房源隐私</h3><p>普通用户看到上传人电话；房东电话和具体地址只向房源上传人返回。ownerId 始终来自认证上下文。</p></div>
+    <div class="item"><h3>会员并发</h3><p>用户级行锁串行化扣次，唯一索引保证同一房源当天只扣一次。周卡每日 10 次，月卡每日 30 次。</p></div>
+    <div class="item"><h3>一次性兑换码</h3><p>数据库只保存 26 位兑换码摘要。带 <code>used_at is null</code> 的条件更新确保并发消费只有一个请求成功。</p></div>
+    <div class="item"><h3>Seata 跨库事务</h3><p>会员库和兑换码库分别维护 undo_log。XID 通过 Feign 传播，会员延期失败时回滚兑换码消费。</p></div>
+    <div class="item"><h3>异步浏览历史</h3><p>House 发布 <code>house.viewed</code> 事件，Audit 服务异步落库。生产版本应继续引入 Outbox 保证事件可靠发布。</p></div>
+    <div class="item"><h3>数据库索引</h3><p>房源按租售状态与时间索引；扣次表使用用户、房源、日期唯一索引；浏览历史按用户和时间倒序索引。</p></div>
+    <div class="item"><h3>测试与 CI</h3><p>包含单元测试、Spring 集成测试、网关鉴权测试以及 MySQL/Redis Testcontainers。GitHub Actions 每次提交自动验证。</p></div>
+  </div></section>
+
+</main>
+<footer>哈市中介帮 Java 项目 · <a href="/resume/">返回在线简历</a></footer>
+</body></html>

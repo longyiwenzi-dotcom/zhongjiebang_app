@@ -29,3 +29,4 @@ server/src/main/resources/redeem-codes.csv
 # Backend build and runtime data
 **/target/
 uploads/
+ppt-build/
