@@ -43,6 +43,46 @@ services:
       JVM_XMS: 256m
       JVM_XMX: 256m
     ports: [ "7091:7091", "8091:8091" ]
+  user-app:
+    profiles: [ "apps" ]
+    build:
+      context: .
+      args: { JAR_FILE: "user-app/target/user-app-1.0.0-SNAPSHOT.jar" }
+    environment: &app-environment
+      NACOS_ADDR: nacos:8848
+      REDIS_HOST: redis
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root-local-only
+      SENTINEL_DASHBOARD: sentinel:8858
+      ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans
+    depends_on: [ mysql, redis, nacos, zipkin ]
+    ports: [ "9101:9101" ]
+  membership-app:
+    profiles: [ "apps" ]
+    build:
+      context: .
+      args: { JAR_FILE: "membership-app/target/membership-app-1.0.0-SNAPSHOT.jar" }
+    environment: *app-environment
+    depends_on: [ mysql, nacos, sentinel, zipkin ]
+    ports: [ "9103:9103" ]
+  house-app:
+    profiles: [ "apps" ]
+    build:
+      context: .
+      args: { JAR_FILE: "house-app/target/house-app-1.0.0-SNAPSHOT.jar" }
+    environment: *app-environment
+    depends_on: [ membership-app, nacos, sentinel, zipkin ]
+    ports: [ "9102:9102" ]
+  gateway:
+    profiles: [ "apps" ]
+    build:
+      context: .
+      args: { JAR_FILE: "gateway/target/gateway-1.0.0-SNAPSHOT.jar" }
+    environment: *app-environment
+    depends_on: [ user-app, house-app, membership-app, redis, nacos, sentinel, zipkin ]
+    ports: [ "9000:9000" ]
 volumes:
   cloud_mysql:
   cloud_redis:

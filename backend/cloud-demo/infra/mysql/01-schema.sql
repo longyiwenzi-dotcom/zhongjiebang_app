@@ -14,8 +14,18 @@ create table if not exists cloud_memberships (
 create table if not exists cloud_redeem_codes (
     id bigint primary key auto_increment,
     code_hash char(64) not null unique,
+    plan_code varchar(20) not null,
     used_by bigint null,
     used_at datetime(3) null
+);
+create table if not exists cloud_house_view_events (
+    id bigint primary key auto_increment,
+    user_id bigint not null,
+    house_id bigint not null,
+    view_date date not null,
+    created_at datetime(3) not null default current_timestamp(3),
+    unique key ux_user_house_day(user_id, house_id, view_date),
+    key ix_user_day(user_id, view_date)
 );
 create table if not exists undo_log (
     branch_id bigint not null,

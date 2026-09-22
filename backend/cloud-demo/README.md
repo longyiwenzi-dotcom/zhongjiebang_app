@@ -50,6 +50,13 @@ curl http://127.0.0.1:9000/cloud/api/houses/1001 \
 
 Nacos is available at `http://127.0.0.1:8848/nacos`, Sentinel at `http://127.0.0.1:8858`, and Zipkin traces at `http://127.0.0.1:9411`.
 
+To run the four applications in containers instead of the IDE, package first and then start the `apps` profile:
+
+```bash
+mvn clean package
+docker compose --profile apps up -d --build
+```
+
 Start Seata only for the transaction demonstration: `docker compose --profile seata up -d seata`. Set `SEATA_ENABLED=true` after its registry and service-group configuration is ready.
 
 ## Interview scenarios
