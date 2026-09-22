@@ -12,6 +12,9 @@ spring:
 seata:
   enabled: ${SEATA_ENABLED:false}
   tx-service-group: zjb_tx_group
+  service:
+    vgroup-mapping.zjb_tx_group: default
+    grouplist.default: ${SEATA_ADDR:127.0.0.1:8091}
 management.endpoints.web.exposure.include: health,info
 management:
   tracing.sampling.probability: ${TRACING_SAMPLE_RATE:1.0}

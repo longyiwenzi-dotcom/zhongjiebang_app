@@ -22,13 +22,6 @@ create table if not exists cloud_memberships (
     plan_code varchar(20) not null,
     expires_at datetime(3) not null
 );
-create table if not exists cloud_redeem_codes (
-    id bigint primary key auto_increment,
-    code_hash char(64) not null unique,
-    plan_code varchar(20) not null,
-    used_by bigint null,
-    used_at datetime(3) null
-);
 create table if not exists cloud_house_view_events (
     id bigint primary key auto_increment,
     user_id bigint not null,

@@ -42,7 +42,7 @@ services:
     profiles: [ "seata" ]
     environment:
       STORE_MODE: file
-      SEATA_IP: host.docker.internal
+      SEATA_IP: seata
       JVM_XMS: 256m
       JVM_XMX: 256m
     ports: [ "7091:7091", "8091:8091" ]
@@ -63,6 +63,8 @@ services:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_USER: guest
       RABBITMQ_PASSWORD: guest
+      SEATA_ENABLED: ${SEATA_ENABLED:-false}
+      SEATA_ADDR: seata:8091
     depends_on: [ mysql, redis, rabbitmq, nacos, zipkin ]
     ports: [ "9101:9101" ]
   membership-app:
@@ -71,7 +73,7 @@ services:
       context: .
       args: { JAR_FILE: "membership-app/target/membership-app-1.0.0-SNAPSHOT.jar" }
     environment: *app-environment
-    depends_on: [ mysql, nacos, sentinel, zipkin ]
+    depends_on: [ mysql, redeem-app, nacos, sentinel, zipkin ]
     ports: [ "9103:9103" ]
   house-app:
     profiles: [ "apps" ]
@@ -97,6 +99,14 @@ services:
     environment: *app-environment
     depends_on: [ mysql, rabbitmq, nacos, zipkin ]
     ports: [ "9104:9104" ]
+  redeem-app:
+    profiles: [ "apps" ]
+    build:
+      context: .
+      args: { JAR_FILE: "redeem-app/target/redeem-app-1.0.0-SNAPSHOT.jar" }
+    environment: *app-environment
+    depends_on: [ mysql, nacos ]
+    ports: [ "9105:9105" ]
 volumes:
   cloud_mysql:
   cloud_redis:

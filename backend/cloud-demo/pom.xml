@@ -12,6 +12,7 @@
         <module>contracts</module><module>gateway</module><module>user-app</module>
         <module>house-app</module><module>membership-app</module>
         <module>audit-app</module>
+        <module>redeem-app</module>
     </modules>
     <properties>
         <java.version>17</java.version>

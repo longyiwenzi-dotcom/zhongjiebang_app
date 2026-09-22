@@ -11,6 +11,7 @@ This project is independent from the production modular monolith. It demonstrate
 | `house-app` | 9102 | House detail API and OpenFeign membership check |
 | `membership-app` | 9103 | Permission, one-time redemption and Seata transaction boundary |
 | `audit-app` | 9104 | RabbitMQ consumer for browsing history and audit events |
+| `redeem-app` | 9105 | Independent redemption database and Seata transaction participant |
 | `contracts` | - | Stable inter-service DTO contracts |
 
 ```mermaid
@@ -20,6 +21,7 @@ flowchart LR
     Gateway --> House[House service]
     Gateway --> Member[Membership service]
     Gateway --> Audit[Audit service]
+    Member -->|OpenFeign + XID| Redeem[Redeem service]
     House -->|OpenFeign| Member
     Gateway & User --> Redis[(Redis sessions)]
     Member --> MySQL[(MySQL)]
@@ -60,7 +62,13 @@ mvn clean package
 docker compose --profile apps up -d --build
 ```
 
-Start Seata only for the transaction demonstration: `docker compose --profile seata up -d seata`. Set `SEATA_ENABLED=true` after its registry and service-group configuration is ready.
+For the cross-service transaction demonstration, enable Seata while starting both profiles:
+
+```bash
+SEATA_ENABLED=true docker compose --profile seata --profile apps up -d --build
+```
+
+Membership owns `zhongjiebang_cloud.cloud_memberships`; redemption owns `zhongjiebang_redeem.redeem_codes`. The global XID propagates through OpenFeign, so a membership failure rolls back the redemption branch through each database's `undo_log`.
 
 ## Interview scenarios
 
@@ -69,6 +77,8 @@ Start Seata only for the transaction demonstration: `docker compose --profile se
 - Redeem one code concurrently: the conditional update permits one successful consumer.
 - Disable Redis: the production app falls back to in-memory rate limiting for single-node operation.
 - Explain deployment: the public 2 GB host runs the modular monolith; this full stack is a local architecture exercise.
+
+Performance methodology and SQL execution-plan checks are documented in [`docs/PERFORMANCE.md`](docs/PERFORMANCE.md); the k6 workload is in [`performance/house-detail.js`](performance/house-detail.js).
 
 ## Security decisions
 

@@ -1,0 +1,16 @@
+server.port: 9105
+spring:
+  application.name: zjb-redeem
+  config.import: optional:nacos:zjb-redeem.yml
+  cloud.nacos.discovery.server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3307}/zhongjiebang_redeem?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root-local-only}
+seata:
+  enabled: ${SEATA_ENABLED:false}
+  tx-service-group: zjb_tx_group
+  service:
+    vgroup-mapping.zjb_tx_group: default
+    grouplist.default: ${SEATA_ADDR:127.0.0.1:8091}
+management.endpoints.web.exposure.include: health,info

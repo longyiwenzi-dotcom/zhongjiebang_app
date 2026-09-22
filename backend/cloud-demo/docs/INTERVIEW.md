@@ -23,7 +23,7 @@
 
 ## Seata 的边界
 
-`membership-app` 已声明全局事务边界和 `undo_log`。默认关闭 Seata，普通演示只使用本地事务；只有在需要展示跨库 AT 模式时才启动 Seata 并开启 `SEATA_ENABLED`。生产中若业务允许，更倾向事务消息和最终一致性，以避免长事务扩大锁范围。
+`membership-app` 开启全局事务后，通过 OpenFeign 调用 `redeem-app`。兑换码位于 `zhongjiebang_redeem`，会员位于 `zhongjiebang_cloud`，两边都有 `undo_log`，XID 随调用传播；会员写入失败会回滚兑换码消费。默认关闭 Seata，只有演示跨库 AT 模式时才开启。生产中若业务允许，更倾向事务消息和最终一致性，以避免长事务扩大锁范围。
 
 ## 可继续扩展
 

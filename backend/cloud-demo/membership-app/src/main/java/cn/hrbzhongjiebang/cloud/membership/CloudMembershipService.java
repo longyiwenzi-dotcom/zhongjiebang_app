@@ -1,6 +1,7 @@
 package cn.hrbzhongjiebang.cloud.membership;
 
 import cn.hrbzhongjiebang.cloud.contracts.HouseViewPermission;
+import cn.hrbzhongjiebang.cloud.contracts.RedeemConsumeResult;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,8 @@ import java.time.LocalDate;
 @Service
 public class CloudMembershipService {
     private final JdbcTemplate jdbc;
-    public CloudMembershipService(JdbcTemplate jdbc) { this.jdbc = jdbc; }
+    private final RedeemCodeClient redeemCodes;
+    public CloudMembershipService(JdbcTemplate jdbc, RedeemCodeClient redeemCodes) { this.jdbc = jdbc; this.redeemCodes = redeemCodes; }
 
     @Transactional
     public HouseViewPermission consumeView(long userId, long houseId) {
@@ -40,16 +42,11 @@ public class CloudMembershipService {
     @GlobalTransactional(name = "redeem-membership", rollbackFor = Exception.class)
     @Transactional
     public void redeem(long userId, String codeHash) {
-        RedeemCode code = jdbc.query("select id, plan_code from cloud_redeem_codes where code_hash=? and used_at is null for update",
-                result -> result.next() ? new RedeemCode(result.getLong(1), CloudMembershipPlan.valueOf(result.getString(2))) : null, codeHash);
-        if (code == null) throw new IllegalArgumentException("兑换码无效或已使用");
-        int consumed = jdbc.update("update cloud_redeem_codes set used_by=?, used_at=now() where id=? and used_at is null", userId, code.id());
-        if (consumed != 1) throw new IllegalArgumentException("兑换码无效或已使用");
-        int days = switch (code.plan()) { case WEEK -> 7; case MONTH -> 30; case QUARTER -> 90; case YEAR -> 365; };
+        RedeemConsumeResult consumed = redeemCodes.consume(new RedeemCodeClient.ConsumeRequest(userId, codeHash));
+        CloudMembershipPlan plan = CloudMembershipPlan.valueOf(consumed.planCode());
+        int days = switch (plan) { case WEEK -> 7; case MONTH -> 30; case QUARTER -> 90; case YEAR -> 365; };
         jdbc.update("insert into cloud_memberships(user_id, plan_code, expires_at) values (?, ?, date_add(now(), interval ? day)) " +
                         "on duplicate key update plan_code=values(plan_code), expires_at=date_add(greatest(expires_at, now()), interval ? day)",
-                userId, code.plan().name(), days, days);
+                userId, plan.name(), days, days);
     }
-
-    private record RedeemCode(long id, CloudMembershipPlan plan) { }
 }
