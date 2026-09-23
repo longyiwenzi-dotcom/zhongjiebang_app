@@ -19,8 +19,12 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     private static final Set<String> PUBLIC_PATHS = Set.of(
             "/cloud/api/users/register", "/cloud/api/users/login", "/actuator/health");
     private final ReactiveStringRedisTemplate redis;
+    private final String internalToken;
 
-    public AuthenticationFilter(ReactiveStringRedisTemplate redis) { this.redis = redis; }
+    public AuthenticationFilter(ReactiveStringRedisTemplate redis, @org.springframework.beans.factory.annotation.Value("${app.internal-token:}") String internalToken) {
+        if(internalToken.length()<32) throw new IllegalStateException("INTERNAL_SERVICE_TOKEN must have at least 32 characters");
+        this.redis = redis; this.internalToken=internalToken;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -40,13 +44,14 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                         : unauthorized(exchange));
     }
 
-    private static ServerWebExchange stripIdentity(ServerWebExchange exchange) {
-        return exchange.mutate().request(exchange.getRequest().mutate().headers(headers -> headers.remove("X-User-Id")).build()).build();
+    private ServerWebExchange stripIdentity(ServerWebExchange exchange) {
+        return exchange.mutate().request(exchange.getRequest().mutate().headers(headers -> { headers.remove("X-User-Id"); headers.set("X-Internal-Token",internalToken); }).build()).build();
     }
 
-    private static ServerWebExchange withIdentity(ServerWebExchange exchange, String userId) {
+    private ServerWebExchange withIdentity(ServerWebExchange exchange, String userId) {
         return exchange.mutate().request(exchange.getRequest().mutate().headers(headers -> {
             headers.remove("X-User-Id");
+            headers.set("X-Internal-Token",internalToken);
             headers.set("X-User-Id", userId);
         }).build()).build();
     }

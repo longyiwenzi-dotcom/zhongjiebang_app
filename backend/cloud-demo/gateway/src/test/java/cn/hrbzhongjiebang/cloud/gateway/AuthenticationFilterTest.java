@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 class AuthenticationFilterTest {
     @Test
     void rejectsProtectedRequestWithoutToken() {
-        AuthenticationFilter filter = new AuthenticationFilter(mock(ReactiveStringRedisTemplate.class));
+        AuthenticationFilter filter = new AuthenticationFilter(mock(ReactiveStringRedisTemplate.class), "test-internal-012345678901234567890");
         MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/cloud/api/houses/1").build());
         StepVerifier.create(filter.filter(exchange, ignored -> Mono.empty())).verifyComplete();
         assertEquals(HttpStatus.UNAUTHORIZED, exchange.getResponse().getStatusCode());
@@ -28,7 +28,7 @@ class AuthenticationFilterTest {
 
     @Test
     void stripsSpoofedIdentityFromPublicRequest() {
-        AuthenticationFilter filter = new AuthenticationFilter(mock(ReactiveStringRedisTemplate.class));
+        AuthenticationFilter filter = new AuthenticationFilter(mock(ReactiveStringRedisTemplate.class), "test-internal-012345678901234567890");
         MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.post("/cloud/api/users/login").header("X-User-Id", "999").build());
         AtomicReference<ServerWebExchange> forwarded = new AtomicReference<>();
         GatewayFilterChain chain = next -> { forwarded.set(next); return Mono.empty(); };
@@ -43,7 +43,7 @@ class AuthenticationFilterTest {
         ReactiveValueOperations<String, String> values = mock(ReactiveValueOperations.class);
         when(redis.opsForValue()).thenReturn(values);
         when(values.get(anyString())).thenReturn(Mono.just("42"));
-        AuthenticationFilter filter = new AuthenticationFilter(redis);
+        AuthenticationFilter filter = new AuthenticationFilter(redis,"test-internal-012345678901234567890");
         MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/cloud/api/houses/1")
                 .header("Authorization", "Bearer 12345678901234567890123456789012")
                 .header("X-User-Id", "999").build());
@@ -62,7 +62,7 @@ class AuthenticationFilterTest {
             when(redis.opsForValue()).thenReturn(values);when(values.get(anyString())).thenReturn(result);
             var exchange=MockServerWebExchange.from(MockServerHttpRequest.get("/cloud/api/houses/1").header("Authorization","Bearer 12345678901234567890123456789012"));
             var called=new java.util.concurrent.atomic.AtomicBoolean();
-            StepVerifier.create(new AuthenticationFilter(redis).filter(exchange,next->{called.set(true);return Mono.empty();})).verifyComplete();
+            StepVerifier.create(new AuthenticationFilter(redis,"test-internal-012345678901234567890").filter(exchange,next->{called.set(true);return Mono.empty();})).verifyComplete();
             assertEquals(false,called.get());assertEquals(HttpStatus.UNAUTHORIZED,exchange.getResponse().getStatusCode());
         }
     }

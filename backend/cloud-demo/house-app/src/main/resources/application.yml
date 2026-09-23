@@ -19,3 +19,6 @@ management.endpoints.web.exposure.include: health,info
 management:
   tracing.sampling.probability: ${TRACING_SAMPLE_RATE:1.0}
   zipkin.tracing.endpoint: ${ZIPKIN_ENDPOINT:http://127.0.0.1:9411/api/v2/spans}
+
+app.internal-token: ${INTERNAL_SERVICE_TOKEN:}
+spring.cloud.openfeign.client.config.default.defaultRequestHeaders.X-Internal-Token: ${INTERNAL_SERVICE_TOKEN:}

@@ -22,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest(properties = {
         "spring.cloud.nacos.discovery.enabled=false",
-        "management.tracing.enabled=false"
+        "management.tracing.enabled=false",
+        "app.internal-token=test-internal-012345678901234567890"
 })
 class CloudUserServiceContainerTest {
     @Container static final MySQLContainer<?> MYSQL = new MySQLContainer<>("mysql:8.4")

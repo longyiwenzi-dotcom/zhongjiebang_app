@@ -55,6 +55,7 @@ services:
       context: .
       args: { JAR_FILE: "user-app/target/user-app-1.0.0-SNAPSHOT.jar" }
     environment: &app-environment
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:?Set a random internal service token of at least 32 characters}
       NACOS_ADDR: nacos:8848
       REDIS_HOST: redis
       MYSQL_HOST: mysql
