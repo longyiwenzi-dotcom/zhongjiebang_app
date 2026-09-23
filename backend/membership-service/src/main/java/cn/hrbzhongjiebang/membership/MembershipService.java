@@ -56,6 +56,7 @@ public class MembershipService {
     @Transactional
     public void authorizeHouseView(long userId, long ownerId, long houseId) {
         if (userId == ownerId) return;
+        memberships.lockUser(userId);
         Instant now = clock.instant();
         MembershipRepository.MembershipRecord active = memberships.findActive(userId, now)
                 .orElseThrow(() -> new BusinessException("MEMBERSHIP_REQUIRED", "开通会员后可查看房源详情"));

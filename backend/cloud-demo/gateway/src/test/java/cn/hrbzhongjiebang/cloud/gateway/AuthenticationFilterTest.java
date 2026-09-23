@@ -48,9 +48,9 @@ class AuthenticationFilterTest {
                 .header("Authorization", "Bearer 12345678901234567890123456789012")
                 .header("X-User-Id", "999").build());
         AtomicReference<ServerWebExchange> forwarded = new AtomicReference<>();
-        StepVerifier.create(filter.filter(exchange, next -> { forwarded.set(next); return Mono.empty(); })).verifyComplete();
+        StepVerifier.create(filter.filter(exchange, next -> { forwarded.set(next); next.getResponse().setStatusCode(HttpStatus.OK); return next.getResponse().setComplete(); })).verifyComplete();
         assertEquals("42", forwarded.get().getRequest().getHeaders().getFirst("X-User-Id"));
-        assertNull(exchange.getResponse().getStatusCode());
+        assertEquals(HttpStatus.OK, exchange.getResponse().getStatusCode());
         assertEquals("", exchange.getResponse().getBodyAsString().block());
     }
 
