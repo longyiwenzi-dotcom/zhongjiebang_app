@@ -17,6 +17,11 @@ class WebSecurityRegressionTest {
     @Autowired cn.hrbzhongjiebang.house.HouseService houses;
     @Autowired org.springframework.jdbc.core.JdbcTemplate jdbc;
     private static final String API="/zhongjiebang-demo/api/v1";
+    @Test void prefixedDocumentationAssetsArePublic() throws Exception {
+        mvc.perform(get("/zhongjiebang-demo/swagger-ui/index.html")).andExpect(status().isOk());
+        mvc.perform(get("/zhongjiebang-demo/swagger-ui/swagger-initializer.js")).andExpect(status().isOk());
+        mvc.perform(get("/zhongjiebang-demo/v3/api-docs/swagger-config")).andExpect(status().isOk());
+    }
     @Test void anonymousWritesAndPasswordChangesRequireAuthentication() throws Exception {
         mvc.perform(post(API+"/houses").contentType("application/json").content("{}")).andExpect(status().isUnauthorized());
         mvc.perform(post(API+"/auth/password").contentType("application/json").content("{\"password\":\"StrongPass123\"}")).andExpect(status().isUnauthorized());
