@@ -1,6 +1,7 @@
 package cn.hrbzhongjiebang.config;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,8 +19,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/zhongjiebang-demo/", "/zhongjiebang-demo/index.html").permitAll()
-                        .requestMatchers("/zhongjiebang-demo/api/v1/auth/**").permitAll()
-                        .requestMatchers("/zhongjiebang-demo/api/v1/houses").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/zhongjiebang-demo/api/v1/auth/register", "/zhongjiebang-demo/api/v1/auth/login/password").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/zhongjiebang-demo/api/v1/houses").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors.authenticationEntryPoint((request, response, ex) -> {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

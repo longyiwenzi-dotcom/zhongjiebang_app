@@ -50,5 +50,20 @@ class AuthenticationFilterTest {
         AtomicReference<ServerWebExchange> forwarded = new AtomicReference<>();
         StepVerifier.create(filter.filter(exchange, next -> { forwarded.set(next); return Mono.empty(); })).verifyComplete();
         assertEquals("42", forwarded.get().getRequest().getHeaders().getFirst("X-User-Id"));
+        assertNull(exchange.getResponse().getStatusCode());
+        assertEquals("", exchange.getResponse().getBodyAsString().block());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test void missingOrUnavailableSessionNeverReachesService() {
+        for (Mono<String> result : java.util.List.of(Mono.<String>empty(), Mono.<String>error(new RuntimeException("Redis unavailable")))) {
+            ReactiveStringRedisTemplate redis=mock(ReactiveStringRedisTemplate.class);
+            ReactiveValueOperations<String,String> values=mock(ReactiveValueOperations.class);
+            when(redis.opsForValue()).thenReturn(values);when(values.get(anyString())).thenReturn(result);
+            var exchange=MockServerWebExchange.from(MockServerHttpRequest.get("/cloud/api/houses/1").header("Authorization","Bearer 12345678901234567890123456789012"));
+            var called=new java.util.concurrent.atomic.AtomicBoolean();
+            StepVerifier.create(new AuthenticationFilter(redis).filter(exchange,next->{called.set(true);return Mono.empty();})).verifyComplete();
+            assertEquals(false,called.get());assertEquals(HttpStatus.UNAUTHORIZED,exchange.getResponse().getStatusCode());
+        }
     }
 }

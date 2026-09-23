@@ -33,7 +33,7 @@ public class CloudHouseService {
         int safePage = Math.max(0, page), safeSize = Math.max(1, Math.min(size, 50));
         String term = "%" + (keyword == null ? "" : keyword.trim()) + "%";
         return jdbc.query("select * from cloud_houses where status='ACTIVE' and (? is null or is_rent=?) and (community like ? or street like ?) order by id desc limit ? offset ?",
-                (result, row) -> map(result), rent, rent, term, term, safeSize, safePage * safeSize);
+                (result, row) -> map(result), rent, rent, term, term, safeSize, (long) safePage * safeSize);
     }
 
     private static CloudHouse map(ResultSet r) throws SQLException {

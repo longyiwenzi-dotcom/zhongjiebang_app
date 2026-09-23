@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface MembershipRepository {
+    void lockUser(long userId);
+
     Optional<MembershipRecord> findActive(long userId, Instant now);
 
     RedeemCodeRecord lockUnusedCode(String codeHash);

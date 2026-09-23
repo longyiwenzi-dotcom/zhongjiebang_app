@@ -19,7 +19,22 @@ jobs:
           distribution: temurin
           java-version: "17"
           cache: maven
+      - run: docker info
       - run: mvn --batch-mode verify
+      - name: Require executed container tests
+        run: |
+          python3 - <<'PY'
+          import pathlib, xml.etree.ElementTree as E
+          roots=[E.parse(p).getroot() for p in pathlib.Path('.').rglob('TEST-*.xml')]
+          containers=[r for r in roots if 'ContainerTest' in r.attrib.get('name','') or 'MySqlConcurrencyTest' in r.attrib.get('name','')]
+          assert containers, 'Required container test report missing'
+          assert all(int(r.attrib.get('tests',0))>0 and int(r.attrib.get('skipped',0))==0 for r in containers), 'Container tests skipped'
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: monolith-test-reports
+          path: backend/**/target/surefire-reports/**
   cloud-demo:
     runs-on: ubuntu-latest
     defaults:
@@ -32,4 +47,19 @@ jobs:
           distribution: temurin
           java-version: "17"
           cache: maven
+      - run: docker info
       - run: mvn --batch-mode verify
+      - name: Require executed container tests
+        run: |
+          python3 - <<'PY'
+          import pathlib, xml.etree.ElementTree as E
+          roots=[E.parse(p).getroot() for p in pathlib.Path('.').rglob('TEST-*.xml')]
+          containers=[r for r in roots if 'ContainerTest' in r.attrib.get('name','')]
+          assert containers, 'Required container test report missing'
+          assert all(int(r.attrib.get('tests',0))>0 and int(r.attrib.get('skipped',0))==0 for r in containers), 'Container tests skipped'
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cloud-test-reports
+          path: backend/cloud-demo/**/target/surefire-reports/**

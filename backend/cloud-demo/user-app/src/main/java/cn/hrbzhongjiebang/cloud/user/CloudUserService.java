@@ -51,7 +51,7 @@ public class CloudUserService {
 
     private static void validate(String phone, String password) {
         if (phone == null || !phone.matches("1\\d{10}")) throw new IllegalArgumentException("手机号格式不正确");
-        if (password == null || password.length() < 8 || password.length() > 72) throw new IllegalArgumentException("密码长度必须为8到72位");
+        if (password == null || password.length() < 8 || password.getBytes(StandardCharsets.UTF_8).length > 72) throw new IllegalArgumentException("密码长度必须为8到72位");
     }
     private static String sha256(String value) {
         try { return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8))); }

@@ -19,7 +19,7 @@ public class HouseViewEventPublisher {
 
     public void viewed(long userId, long houseId) {
         String traceId = tracer.currentSpan() == null ? "" : tracer.currentSpan().context().traceId();
-        try { rabbit.convertAndSend(EXCHANGE, "house.viewed", new HouseViewedEvent(userId, houseId, Instant.now(), traceId)); }
+        try { rabbit.convertAndSend(EXCHANGE, "house.viewed", new HouseViewedEvent(java.util.UUID.randomUUID().toString(), userId, houseId, Instant.now(), traceId)); }
         catch (RuntimeException error) { log.warn("House view audit event could not be published: user={}, house={}", userId, houseId, error); }
     }
 }

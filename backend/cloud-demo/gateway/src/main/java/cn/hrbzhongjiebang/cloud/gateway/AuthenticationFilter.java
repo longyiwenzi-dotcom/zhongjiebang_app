@@ -29,10 +29,15 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
         String authorization = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authorization == null || !authorization.startsWith("Bearer ")) return unauthorized(exchange);
         String token = authorization.substring(7).trim();
-        if (token.length() < 32) return unauthorized(exchange);
+        if (token.length() < 32 || token.length() > 256) return unauthorized(exchange);
         return redis.opsForValue().get("zjb:session:" + sha256(token))
-                .flatMap(userId -> chain.filter(withIdentity(exchange, userId)))
-                .switchIfEmpty(unauthorized(exchange));
+                .onErrorResume(error -> Mono.empty())
+                .filter(userId -> userId.matches("[1-9][0-9]*"))
+                .map(userId -> java.util.Optional.of(userId))
+                .defaultIfEmpty(java.util.Optional.empty())
+                .flatMap(userId -> userId.isPresent()
+                        ? chain.filter(withIdentity(exchange, userId.get()))
+                        : unauthorized(exchange));
     }
 
     private static ServerWebExchange stripIdentity(ServerWebExchange exchange) {

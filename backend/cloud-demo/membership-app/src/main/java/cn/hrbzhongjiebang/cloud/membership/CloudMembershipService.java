@@ -11,6 +11,8 @@ import java.time.LocalDate;
 
 @Service
 public class CloudMembershipService {
+    @org.springframework.beans.factory.annotation.Value("${seata.enabled:false}")
+    private boolean seataEnabled;
     private final JdbcTemplate jdbc;
     private final RedeemCodeClient redeemCodes;
     public CloudMembershipService(JdbcTemplate jdbc, RedeemCodeClient redeemCodes) { this.jdbc = jdbc; this.redeemCodes = redeemCodes; }
@@ -21,7 +23,7 @@ public class CloudMembershipService {
                 result -> result.next() ? result.getString(1) : null, userId);
         if (planCode == null) return HouseViewPermission.denied("请先开通会员");
         CloudMembershipPlan plan = CloudMembershipPlan.valueOf(planCode);
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(java.time.ZoneId.of("Asia/Shanghai"));
         Integer viewed = jdbc.queryForObject("select count(*) from cloud_house_view_events where user_id=? and view_date=?",
                 Integer.class, userId, Date.valueOf(today));
         Integer alreadyViewed = jdbc.queryForObject("select count(*) from cloud_house_view_events where user_id=? and house_id=? and view_date=?",
@@ -42,6 +44,7 @@ public class CloudMembershipService {
     @GlobalTransactional(name = "redeem-membership", rollbackFor = Exception.class)
     @Transactional
     public void redeem(long userId, String codeHash) {
+        if (!seataEnabled) throw new IllegalArgumentException("跨库兑换需要启用 Seata");
         RedeemConsumeResult consumed = redeemCodes.consume(new RedeemCodeClient.ConsumeRequest(userId, codeHash));
         CloudMembershipPlan plan = CloudMembershipPlan.valueOf(consumed.planCode());
         int days = switch (plan) { case WEEK -> 7; case MONTH -> 30; case QUARTER -> 90; case YEAR -> 365; };

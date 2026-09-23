@@ -33,6 +33,7 @@ create table if not exists cloud_house_view_events (
 );
 create table if not exists cloud_house_view_history (
     id bigint primary key auto_increment,
+    event_id varchar(36) not null unique,
     user_id bigint not null, house_id bigint not null, viewed_at datetime(3) not null, trace_id varchar(64),
     key ix_history_user_time(user_id, viewed_at)
 );

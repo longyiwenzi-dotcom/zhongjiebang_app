@@ -35,15 +35,17 @@ public class AuthService {
             throw new BusinessException("PHONE_REGISTERED", "该手机号已经注册");
         }
         Instant now = clock.instant();
-        UserAccount user = users.create(phone, encodeOptionalPassword(password), now);
+        validatePassword(password);
+        UserAccount user = users.create(phone, passwordEncoder.encode(password), now);
         return issueSession(user, now);
     }
 
     @Transactional
     public AuthResult loginByPassword(String rawPhone, String password) {
         String phone = new PhoneNumber(rawPhone).value();
+        validatePassword(password);
         UserAccount user = users.findByPhone(phone)
-                .orElseThrow(() -> new BusinessException("USER_NOT_FOUND", "该手机号尚未注册"));
+                .orElseThrow(() -> new BusinessException("INVALID_CREDENTIALS", "手机号或密码错误"));
         if (!user.hasPassword() || password == null || !passwordEncoder.matches(password, user.passwordHash())) {
             throw new BusinessException("INVALID_CREDENTIALS", "手机号或密码错误");
         }
@@ -82,7 +84,7 @@ public class AuthService {
     }
 
     private void validatePassword(String password) {
-        if (password == null || password.length() < 8 || password.length() > 72) {
+        if (password == null || password.length() < 8 || password.getBytes(StandardCharsets.UTF_8).length > 72) {
             throw new BusinessException("INVALID_PASSWORD", "密码长度应为8至72位");
         }
     }

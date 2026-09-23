@@ -19,6 +19,11 @@ public class JdbcMembershipRepository implements MembershipRepository {
     }
 
     @Override
+    public void lockUser(long userId) {
+        jdbc.queryForObject("SELECT id FROM users WHERE id = ? FOR UPDATE", Long.class, userId);
+    }
+
+    @Override
     public Optional<MembershipRecord> findActive(long userId, Instant now) {
         List<MembershipRecord> result = jdbc.query("""
                 SELECT plan_code, starts_at, expires_at FROM memberships

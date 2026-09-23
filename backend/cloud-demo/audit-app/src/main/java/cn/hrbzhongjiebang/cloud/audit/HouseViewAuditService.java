@@ -15,8 +15,10 @@ public class HouseViewAuditService {
 
     @RabbitListener(queues = AuditConfiguration.QUEUE)
     public void record(HouseViewedEvent event) {
-        jdbc.update("insert into cloud_house_view_history(user_id,house_id,viewed_at,trace_id) values (?,?,?,?)",
-                event.userId(), event.houseId(), Timestamp.from(event.viewedAt()), event.traceId());
+        if (event.eventId() == null || event.eventId().isBlank()) throw new IllegalArgumentException("eventId required");
+        try { jdbc.update("insert into cloud_house_view_history(event_id,user_id,house_id,viewed_at,trace_id) values (?,?,?,?,?)",
+                event.eventId(), event.userId(), event.houseId(), Timestamp.from(event.viewedAt()), event.traceId());
+        } catch (org.springframework.dao.DuplicateKeyException duplicate) { /* same event already committed */ }
     }
 
     public List<Map<String, Object>> history(long userId, int limit) {

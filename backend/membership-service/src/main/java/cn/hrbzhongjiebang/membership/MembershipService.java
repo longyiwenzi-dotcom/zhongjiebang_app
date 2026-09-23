@@ -27,6 +27,7 @@ public class MembershipService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public MembershipStatus redeem(long userId, String rawCode) {
         String code = normalizeCode(rawCode);
+        memberships.lockUser(userId);
         Instant now = clock.instant();
         MembershipRepository.RedeemCodeRecord redeemCode = memberships.lockUnusedCode(hash(code));
         MembershipPlan plan = redeemCode.plan();
