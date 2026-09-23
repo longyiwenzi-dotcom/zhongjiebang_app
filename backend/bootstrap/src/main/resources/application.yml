@@ -42,6 +42,8 @@ management:
         enabled: true
 
 springdoc:
+  api-docs:
+    path: /zhongjiebang-demo/v3/api-docs
   swagger-ui:
     path: /zhongjiebang-demo/docs
 

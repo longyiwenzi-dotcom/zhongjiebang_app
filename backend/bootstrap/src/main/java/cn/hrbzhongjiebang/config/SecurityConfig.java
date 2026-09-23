@@ -17,7 +17,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/health", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/actuator/health", "/actuator/health/**", "/swagger-ui/**", "/zhongjiebang-demo/docs", "/zhongjiebang-demo/v3/api-docs/**").permitAll()
                         .requestMatchers("/zhongjiebang-demo/", "/zhongjiebang-demo/index.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/zhongjiebang-demo/api/v1/auth/register", "/zhongjiebang-demo/api/v1/auth/login/password").permitAll()
                         .requestMatchers(HttpMethod.GET, "/zhongjiebang-demo/api/v1/houses").permitAll()

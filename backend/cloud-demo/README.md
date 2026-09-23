@@ -35,7 +35,8 @@ The house service uses a fail-closed fallback: if membership is unavailable, pai
 
 ## Run locally
 
-1. `docker compose up -d mysql redis rabbitmq nacos sentinel zipkin`
+1. Set `INTERNAL_SERVICE_TOKEN` to a cryptographically random value of at least 32 characters (for example, `export INTERNAL_SERVICE_TOKEN=$(openssl rand -hex 32)`). Do not commit it. All services and Gateway require the same value.
+2. `docker compose up -d mysql redis rabbitmq nacos sentinel zipkin`
 2. `mvn clean package`
 3. Start `UserApplication`, `MembershipApplication`, `HouseApplication`, then `GatewayApplication` from the IDE.
 4. Register and receive an opaque session token:
@@ -87,3 +88,11 @@ Performance methodology and SQL execution-plan checks are documented in [`docs/P
 - Sessions expire after 12 hours and identity headers are never trusted from the public client.
 - Membership degradation is fail-closed so a dependency outage cannot expose paid data.
 - Nacos authentication is disabled only in the local Compose environment and must not be copied to a public server.
+
+## Review corrections (2026-09-23)
+
+- Service HTTP endpoints require `X-Internal-Token`. Gateway overwrites external identity and internal-token headers; Feign sends the configured token. Direct service calls with only `X-User-Id` are rejected.
+- Compose does not publish business-service ports. Middleware management ports and Gateway bind to loopback. RabbitMQ uses a dedicated local demo account instead of cross-container guest access. This remains a local demo, not a production mTLS design.
+- Seata must be enabled for cross-database redemption. Full coordinator rollback and message broker failure recovery are not yet end-to-end verified.
+- Audit events now carry eventId with a unique database key. Existing local volumes must apply `infra/migrate-audit-event-id.sql` once before updating publisher and consumer. Drain old-format queued events first. Fresh volumes use the updated initialization schema. Do not delete existing volumes to apply this migration.
+- CI uploads reports and rejects skipped mandatory container tests. Do not equate build success with full-stack runtime validation.

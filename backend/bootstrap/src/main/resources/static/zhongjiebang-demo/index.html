@@ -24,7 +24,9 @@
       .primary { background: #fff; color: #000; }
     }
   </style>
-</head>
+<style>
+:root{color-scheme:light}body{background:#f6f7f2;color:#20211f;font-family:"Microsoft YaHei",sans-serif}header{border-color:#e63c21}a{color:#e63c21}.links{display:grid;grid-template-columns:repeat(3,1fr)}.links a{box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-height:56px;padding:0 20px;border:1px solid #20211f;font-size:15px;text-decoration:none}.links a.primary{background:#e63c21;border-color:#e63c21;color:white}article{border-radius:0}h2{font-size:30px}@media(max-width:600px){.links{grid-template-columns:1fr}}
+</style></head>
 <body>
 <main>
   <header>
@@ -33,7 +35,7 @@
     <p>从真实房源业务重构出的 Java 后端工程，重点展示鉴权、数据权限、事务和并发安全。</p>
     <div class="links">
       <a class="primary" href="/zhongjiebang-demo/docs">查看接口文档</a>
-      <a href="https://github.com/longyiwenzi-dotcom/zhongjiebang_app" target="_blank" rel="noopener">GitHub 源码</a>
+      <a href="https://github.com/longyiwenzi-dotcom/zhongjiebang_app/tree/codex/java-interview-refactor/backend" target="_blank" rel="noopener">GitHub 源码</a>
       <a href="/resume/">返回在线简历</a>
     </div>
   </header>
@@ -48,8 +50,8 @@
   </section>
   <section>
     <h2>演示入口</h2>
-    <p>健康检查：<code>/actuator/health</code></p>
-    <p>OpenAPI：<code>/v3/api-docs</code></p>
+    <p>健康检查：<code>/zhongjiebang-demo/health</code></p>
+    <p>OpenAPI：<code>/zhongjiebang-demo/v3/api-docs</code></p>
     <p>业务 API：<code>/zhongjiebang-demo/api/v1</code></p>
   </section>
 </main>
