@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest @AutoConfigureMockMvc @Transactional
+@SpringBootTest(properties = {"springdoc.api-docs.path=/zhongjiebang-demo/v3/api-docs", "springdoc.swagger-ui.path=/zhongjiebang-demo/docs"}) @AutoConfigureMockMvc @Transactional
 class WebSecurityRegressionTest {
     @Autowired MockMvc mvc;
     @Autowired AuthService auth;
